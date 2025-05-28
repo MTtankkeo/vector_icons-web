@@ -9,10 +9,12 @@ import { Button } from "../templates/Button";
 import { RouterBinding } from "@web-package/react-widgets-router";
 import { l10n } from "../localization/localization";
 import { RenderIcon } from "../templates/RenderIcon";
-import { Icons } from "./App";
-import { MutableRef, useEffect, useLayoutEffect, useRef, useState } from "preact/hooks";
+import { Icons, IconType } from "./App";
+import { MutableRef, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "preact/hooks";
 import { CSSProperties } from "react-dom/src";
 import { TouchRipple } from "web-touch-ripple/jsx";
+import { PopupPage } from "../components/popup_page";
+import { IconPopup } from "./home/Search-popup";
 
 export function LandingPage() {
     const parentRef = useRef<HTMLDivElement>();
@@ -104,15 +106,15 @@ namespace PartHeader {
                                     <Button.Secondary text={l10n["sign_up"]} onTap={() => RouterBinding.instance.push("/sign-up")} />
                                 </Row>
                             </Row>
-                            <Box padding="200px var(--padding-lg)" maxWidth="1000px" margin="0px auto">
-                                <Text fontWeight="bold" fontSize={isMobile ? "40px" : "60px"}>WELCOME!</Text>
+                            <Column align="center" padding="200px var(--padding-lg)" maxWidth="1000px" margin="0px auto">
+                                <Text fontWeight="bold" fontSize={isMobile ? "50px" : "70px"}>WELCOME!</Text>
                                 <Text color="var(--foreground2)" fontSize={isMobile ? "16px" : "18px"}>{l10n["landing_introduction"]}</Text>
                                 <Row gap="var(--padding-sm)" marginTop="var(--padding-lg)">
                                     <Button.Primary icon="compass" text={l10n["landing_get_started"]} onTap={() => RouterBinding.instance.push("/app")} />
                                     <Button.Secondary text={l10n["app_settings_title"]} onTap={() => RouterBinding.instance.push("/app/settings")} />
                                 </Row>
-                            </Box>
-                            <Column align="center" position="absolute" width="100%" bottom="0px" padding="var(--padding-df)">
+                            </Column>
+                            <Column align="center" position="absolute" width="100%" bottom="0px" marginBottom="var(--padding-df)">
                                 <Box
                                     ref={bottomTooltipRef}
                                     opacity="0"
@@ -145,10 +147,55 @@ namespace PartHeader {
                                     </Box>
                                 </Box>
                             </Column>
+                            <Row position="absolute" width="100%" bottom="150px" align="center">
+                                <IconsPreview />
+                            </Row>
                         </Column>
                     )
                 }}
             />
+        )
+    }
+
+    export function IconsPreview() {
+        const home = useMemo(() => Icons.find(v => v.name == "home"), []);
+        const compass = useMemo(() => Icons.find(v => v.name == "compass"), []);
+        const search = useMemo(() => Icons.find(v => v.name == "search"), []);
+        const heart = useMemo(() => Icons.find(v => v.name == "heart"), []);
+        const notification = useMemo(() => Icons.find(v => v.name == "notification"), []);
+
+        return (
+            <Row
+                align="center"
+                backgroundColor="var(--rearground-backdrop)"
+                backdropFilter="blur(5px)"
+                borderRadius="15px"
+                overflow="hidden"
+            >
+                <IconsPreviewItem icon={home} />
+                <Box width="1px" height="15px" backgroundColor="var(--rearground)" />
+                <IconsPreviewItem icon={compass} />
+                <Box width="1px" height="15px" backgroundColor="var(--rearground)" />
+                <IconsPreviewItem icon={search} />
+                <Box width="1px" height="15px" backgroundColor="var(--rearground)" />
+                <IconsPreviewItem icon={heart} />
+                <Box width="1px" height="15px" backgroundColor="var(--rearground)" />
+                <IconsPreviewItem icon={notification} />
+            </Row>
+        )
+    }
+
+    export function IconsPreviewItem({icon}: {icon: IconType}) {
+        const onTap = () => {
+            PopupPage.open(<IconPopup icon={icon} filled={false} />)
+        }
+
+        return (
+            <TouchRipple onTap={onTap}>
+                <Box padding="var(--padding-df)">
+                    <RenderIcon.Name name={icon.name} size="18px" color="var(--foreground3)" />
+                </Box>
+            </TouchRipple>
         )
     }
 }

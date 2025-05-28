@@ -8,6 +8,7 @@
     --rearground: rgb(237, 238, 241);
     --rearground-border: rgb(210, 212, 214);
     --rearground-in-background: rgb(230, 232, 235);
+    --rearground-backdrop: rgba(217, 218, 221, 0.5);
     --container: white;
     --foreground: black;
     --foreground2: rgb(50, 50, 50);
@@ -40,19 +41,20 @@
 }
 
 .dark {
-    --primary: rgb(0, 140, 255);
+    --primary: rgb(59, 137, 255);
     --background: rgb(10, 11, 13);
     --background-shadow: black;
     --background-overlay: rgb(40, 41, 44);
-    --rearground: rgb(40, 42, 45);
-    --rearground-border: rgb(50, 52, 55);
-    --rearground-in-background: rgb(45, 47, 50);
-    --container: rgb(23, 25, 28);
+    --rearground: rgb(40, 42, 44);
+    --rearground-border: rgb(50, 52, 54);
+    --rearground-in-background: rgb(55, 57, 60);
+    --rearground-backdrop: rgba(40, 42, 44, 0.5);
+    --container: rgb(23, 25, 27);
     --foreground: white;
     --foreground2: rgb(200, 200, 200);
-    --foreground3: rgb(170, 170, 170);
-    --foreground4: rgb(120, 120, 120);
-    --foreground5: rgb(80, 80, 80);
+    --foreground3: rgb(150, 150, 150);
+    --foreground4: rgb(100, 100, 100);
+    --foreground5: rgb(60, 60, 60);
     --shadow: rgb(120, 120, 120, 0.2);
     --popup-background: rgb(40, 42, 44);
     --popup-rearground: rgb(30, 32, 34);
